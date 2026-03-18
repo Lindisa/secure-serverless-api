@@ -1,9 +1,7 @@
 terraform {
-  backend "s3" {
-    bucket         = "secure-serverless-api-terraform-state"
-    key            = "dev/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
+  # backend "s3" {
+  #   bucket = "your-bucket"
+  #   key    = "state.tfstate"
+  #   region = "af-south-1"
+  # }
 }
