@@ -1,7 +1,11 @@
-variable "api_name" {
+variable "lambda_invoke_arn" {
   type = string
 }
 
-variable "lambda_invoke_arn" {
+variable "cognito_client_id" {
+  type = string
+}
+
+variable "cognito_issuer" {
   type = string
 }

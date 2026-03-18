@@ -37,8 +37,10 @@ module "dynamodb" {
 module "api_gateway" {
   source = "../../modules/api_gateway"
 
-  api_name          = "secure-serverless-api"
-  lambda_invoke_arn = module.lambda.lambda_invoke_arn
+  lambda_invoke_arn = module.lambda.invoke_arn
+
+  cognito_client_id = module.cognito.user_pool_client_id
+  cognito_issuer    = "https://cognito-idp.${var.region}.amazonaws.com/${module.cognito.user_pool_id}"
 }
 module "cognito" {
   source = "../../modules/cognito"
