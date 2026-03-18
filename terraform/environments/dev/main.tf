@@ -40,3 +40,15 @@ module "api_gateway" {
   api_name          = "secure-serverless-api"
   lambda_invoke_arn = module.lambda.lambda_invoke_arn
 }
+module "cognito" {
+  source = "../../modules/cognito"
+
+  user_pool_name = "secure-api-users"
+  client_name    = "secure-api-client"
+}
+
+module "cloudfront" {
+  source = "../../modules/cloudfront"
+
+  api_gateway_url = module.api_gateway.api_endpoint
+}
