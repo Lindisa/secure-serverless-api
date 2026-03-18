@@ -1,19 +1,23 @@
 resource "aws_apigatewayv2_api" "api" {
-  name          = var.api_name
+  name          = "secure-api"
   protocol_type = "HTTP"
 }
 
-resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id = aws_apigatewayv2_api.api.id
-
-  integration_type       = "AWS_PROXY"
-  integration_uri        = var.lambda_invoke_arn
-  payload_format_version = "2.0"
+resource "aws_api_gateway_api_key" "key" {
+  name = "secure-api-key"
 }
 
-resource "aws_apigatewayv2_route" "route" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "GET /hello"
+resource "aws_api_gateway_usage_plan" "plan" {
+  name = "secure-usage-plan"
 
-  target = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+  api_stages {
+    api_id = aws_apigatewayv2_api.api.id
+    stage  = "$default"
+  }
+}
+
+resource "aws_api_gateway_usage_plan_key" "plan_key" {
+  key_id        = aws_api_gateway_api_key.key.id
+  key_type      = "API_KEY"
+  usage_plan_id = aws_api_gateway_usage_plan.plan.id
 }
