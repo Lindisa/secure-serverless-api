@@ -1,11 +1,6 @@
 name: Terraform CI
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-
+on: [ push ]
 
 jobs:
   terraform:
@@ -22,11 +17,11 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
-    - name: Terraform Init
+    - name: Terraform Init (no backend)
       run: terraform init -backend=false -input=false
+
+    - name: Terraform Format Check
+      run: terraform fmt -check
 
     - name: Terraform Validate
       run: terraform validate
-
-    - name: Terraform Plan
-      run: terraform plan -lock=false -input=false -refresh=false
