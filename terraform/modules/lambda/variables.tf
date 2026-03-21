@@ -2,14 +2,10 @@ variable "function_name" {
   type = string
 }
 
-variable "lambda_package" {
+variable "filename" {
   type = string
 }
 
-variable "lambda_role" {
-  type = string
-}
-
-variable "log_group_name" {
+variable "lambda_role_arn" {
   type = string
 }
